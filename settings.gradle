@@ -1,0 +1,3 @@
+include ':m_xtools'
+include ':app'
+rootProject.name = "xtools"
