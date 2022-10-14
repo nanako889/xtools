@@ -2,6 +2,8 @@ package com.qbw.xtools;
 
 import android.text.TextUtils;
 
+import java.util.Locale;
+
 /**
  * @author QBW
  * @date 10/12/21
@@ -10,7 +12,8 @@ public class XTools {
     /**
      * 1234567890 -> 123****8901
      */
-    public static String replaceChar(String text, int headerLength, int placeholderLength, char placeholder) {
+    public static String replaceChar(String text, int headerLength, int placeholderLength,
+                                     char placeholder) {
         if (TextUtils.isEmpty(text)) {
             return text;
         }
@@ -44,8 +47,20 @@ public class XTools {
     public static String getHourMinuteSecondVideoDuration(int seconds) {
         int[] hms = getHourMinuteSecond(seconds);
         if (hms[0] > 0) {
-            return String.format("%02d:%02d:%02d", hms[0], hms[1], hms[2]);
+            return String.format(Locale.getDefault(), "%02d:%02d:%02d", hms[0], hms[1], hms[2]);
         }
-        return String.format("%02d:%02d", hms[1], hms[2]);
+        return String.format(Locale.getDefault(), "%02d:%02d", hms[1], hms[2]);
+    }
+
+    public static boolean isFirstRow(int pos, int rowColumnCount) {
+        return pos >= 0 && pos < rowColumnCount;
+    }
+
+    public static boolean isLastRow(int pos, int rowColumnCount, int totalCount) {
+        int row = totalCount / rowColumnCount;
+        if (totalCount % rowColumnCount == 0) {
+            return pos >= (row - 1) * rowColumnCount && pos < totalCount;
+        }
+        return pos >= row * rowColumnCount && pos < totalCount;
     }
 }
